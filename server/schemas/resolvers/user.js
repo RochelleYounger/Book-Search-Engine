@@ -51,8 +51,26 @@ const resolvers = {
         return updatedUser;
       }
 
-      throw new AuthenticationError('User must not logged in to perform this action.');
+      throw new AuthenticationError('User must be logged in to perform this action.');
     },
+    removeBook:  async (parent, { bookId }, context) => {
+      if (context.user) {
+
+        await User.updateOne(
+          { _id: context.user._id },
+          { $pull: { savedBooks: {bookId} } },
+          { new: true, runValidators: true }
+        ).populate('savedBooks');
+
+        
+        const user = await User.findOne({ _id: context.user._id })
+        .populate('savedBooks');
+
+        return user;
+      }
+
+      throw new AuthenticationError('User must be logged in to perform this action.');
+    }
   }
 };
 
