@@ -61,6 +61,10 @@ This application is licensed under [ISC](https://opensource.org/licenses/ISC).
 
 Coding Bootcamp - Module 21: Deep Thoughts
 
+[Complete GraphQL API tutorial using Apollo Express and MongoDB](https://www.youtube.com/watch?v=xUQ-hNRHCgs&t=533s)
+
+[User Authentication with Apollo Server V3, MongoDB, GraphQL, and JWT](https://www.youtube.com/watch?v=htB2uJCf4ws)
+
 
 
 ## Questions
