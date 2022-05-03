@@ -21,7 +21,7 @@ const resolvers = {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError('Your information is incorrect.');
+        throw new AuthenticationError('This user does not exist.');
       }
 
       const correctPw = await user.isCorrectPassword(password);
@@ -38,6 +38,20 @@ const resolvers = {
       const token = signToken(user);
 
       return { token, user };
+    },
+    // **NOTE you need to destructure the input object before you pass it to savedBooks array
+    saveBook:  async (parent, { bookInput }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $push: { savedBooks: bookInput } },
+          { new: true, runValidators: true }
+        ).populate('savedBooks');
+
+        return updatedUser;
+      }
+
+      throw new AuthenticationError('User must not logged in to perform this action.');
     },
   }
 };
